@@ -1,0 +1,20 @@
+[build]
+  command = "npm run prisma:generate && npm run build"
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+  external_node_modules = ["@nestjs/common", "@nestjs/core", "@nestjs/platform-express", "@prisma/client", "@prisma/adapter-pg"]
+
+[functions.reminders]
+  schedule = "* * * * *"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/api/:splat"
+  status = 200
+  force = true
